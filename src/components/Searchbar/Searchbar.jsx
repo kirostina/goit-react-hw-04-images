@@ -1,41 +1,31 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import { StyleHeader, StyledForm } from './Searchbar.styled';
-export class Searchbar extends Component { 
-    state = {
-        query: '',
-        page:1,
-    }
+const Searchbar = ({onSubmit, query}) => { 
+    const [searchQuery, setSearchQuery] = useState(query);
 
-    getPicture = e => {
-        this.setState({ query: e.currentTarget.value });
+    const handleSearchKey = (e) => {
+        if (e.key === 'ENTER') {
+            handleSubmit();
+        }
     };
 
-    handleSubmit = e => {
-    e.preventDefault();
-    const { onSubmit } = this.props;
-    const { query } = this.state;
-    onSubmit(query);
-}
 
-
-    handleSearchKey = e => {
-        if (e.keyCode === 'ENTER') {
-            this.handleSubmit();
-        }
-    }
-    render() {
-        const { query} = this.props;
+    const handleSubmit = () => {
+        onSubmit(searchQuery);
+    };
+    
         return (
             <StyleHeader>
-                <StyledForm onSubmit={this.handleSubmit}>
-                    <button type="submit">
+                <StyledForm onSubmit={(e) => e.preventDefault()}>
+                    <button type="submit" onClick={handleSubmit}>
                         <span>Search</span>
                     </button>
                     <input
-                        onChange={this.getPicture} onKeyDown={this.handleSearchKey} value={query}
+                        onChange={(e) => setSearchQuery(e.target.value)} onKeyDown={handleSearchKey} value={searchQuery}
                         type="text" autoComplete='off' autoFocus placeholder='Search images and photos' />
                 </StyledForm>
             </StyleHeader>
         )
     }
-}
+
+export default Searchbar;

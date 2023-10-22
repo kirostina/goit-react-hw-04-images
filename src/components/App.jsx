@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { ImageGallery } from './ImageGallery/ImageGallery';
 import { Loader } from './Loader/Loader';
-import { Searchbar } from './Searchbar/Searchbar';
+import Searchbar from './Searchbar/Searchbar';
 import { Button } from './Button/Button';
 import { fetchImages } from 'api/ImageApi';
 import toast from 'react-hot-toast';
